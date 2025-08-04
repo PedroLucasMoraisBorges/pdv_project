@@ -1,0 +1,60 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+env/
+venv/
+ENV/
+.venv/
+.pipenv/
+
+# VSCode / PyCharm configs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Media & static (gerados dinamicamente)
+media/
+staticfiles/
+static_root/
+static/
+
+# Arquivos de migração que você pode querer ignorar (opcional)
+# Se quiser versionar migrações, comente essa linha:
+**/migrations/*.py
+**/migrations/*.pyc
+!**/migrations/__init__.py
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Arquivos de teste
+.coverage
+htmlcov/
+.tox/
+nosetests.xml
+*.cover
+*.py,cover
+
+# Secrets e configs
+*.env
+.env.*
+*.secret
+secrets.json
+
+# Docker (se aplicável)
+*.pid
+*.seed
+*.bak
+*.swp
+docker-compose.override.yml

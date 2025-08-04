@@ -1,0 +1,15 @@
+{% extends 'components/base.html' %}
+
+{% block body %}
+<h1>Login</h1>
+<form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+        {{field}}
+    {% endfor %}
+
+    <a href="{% url 'register' %}">Cadastrar</a>
+
+    <button>Entrar</button>
+</form>
+{% endblock %}
