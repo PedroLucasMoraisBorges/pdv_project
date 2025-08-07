@@ -1,5 +1,5 @@
 from django.db import models
-from auth_user.models import User, Address
+from auth_user.models import User, Address, Role
 import uuid
 
 # Create your models here.
@@ -19,3 +19,23 @@ class Company(models.Model):
     email = models.CharField(max_length=244)
     
     fkUser = models.ForeignKey(User, related_name='user_company', on_delete=models.CASCADE)
+
+class CompanyUser(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    company = models.ForeignKey(Company, related_name='employees', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='companies', on_delete=models.CASCADE)
+    role = models.ForeignKey(Role, null=True, blank=True, on_delete=models.SET_NULL)
+    is_active = models.BooleanField(default=True)
+    joined_at = models.DateField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('company', 'user')
+
+class Permission(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=84)
+
+class UserPermissions(models.Model):
+    fkUser = models.ForeignKey(User, related_name='user_atrib_perm', on_delete=models.CASCADE)
+    fkRole = models.ForeignKey(Role, related_name='role_atrib_perm', on_delete=models.CASCADE)
+    fkCompany = models.ForeignKey(Company, related_name='company_atrib_perm', on_delete=models.CASCADE)

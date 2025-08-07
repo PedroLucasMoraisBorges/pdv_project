@@ -24,3 +24,10 @@ class Address(models.Model):
     city = models.CharField(max_length=84)
     number = models.IntegerField()
     cep = models.CharField()
+
+class Role(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(max_length=244)
+
+    def __str__(self):
+        return self.name

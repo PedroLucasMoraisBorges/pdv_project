@@ -5,6 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
@@ -21,10 +23,41 @@
     {% endblock %}
 </head>
 <body>
-    {% block body %}
-    {% endblock %}
+    <header>
+        <p><strong>Logo</strong></p>
 
-    {% block scripts %}
+        <nav class="headerLinks">
+            <a href="">Início</a>
+            <a href="">Sobre</a>
+            <a href="">FAQ</a>
+        </nav>
+
+        <div>
+            <p>{{user.name}}</p>
+            <a href="{% url 'logout' %}">Sair</a>
+        </div>
+    </header>
+
+    
+    <main>
+        <aside class="sidebar closed" id="sidebar">
+            <button id="toggleSidebar">
+                <img src="{% static 'icons/openSideBar.svg' %}" alt="Toggle Sidebar" id="toggleIcon">
+            </button>
+            <a href="{% url 'home' %}">
+                <img src="{% static 'icons/home.svg' %}" alt="Início">
+                <span class="link-text">Início</span>
+            </a>
+        </aside>
+
+
+        <section>
+            {% block body %}
+            {% endblock %}
+        </section>
+    </main>
+
+    {% block script %}
     {% endblock %}
 </body>
 </html>

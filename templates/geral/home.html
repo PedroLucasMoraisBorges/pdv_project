@@ -1,1 +1,63 @@
 {% extends 'components/base.html' %}
+{% load static %}
+
+{% block body %}
+<form id="companyForm">
+    {% csrf_token %}
+    <p>Cadastrar Empresa</p>
+    {% for field in form %}
+        {{ field.label_tag }}
+        {{ field }}
+        <br><br>
+    {% endfor %}
+    <button type="submit">Cadastrar</button>
+</form>
+
+{% for company in companys %}
+{% endfor %}
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'js/masks.js' %}"></script><script>
+document.getElementById('companyForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    console.log(data)
+
+    const response = await fetch("{% url 'createCompany' %}", {
+        method: 'POST',
+        credentials: 'same-origin', // <--- envia cookie de sessão / CSRF
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken,
+            'X-Requested-With': 'XMLHttpRequest' // opcional, ajuda com detecção AJAX
+        },
+        body: JSON.stringify(data),
+    });
+
+    // Debug: inspecionar status e corpo bruto
+    const text = await response.text();
+    let result;
+    try {
+        result = JSON.parse(text);
+    } catch {
+        result = { raw: text };
+    }
+
+    if (response.ok) {
+        alert(result.message || 'Empresa cadastrada!');
+    } else {
+        console.error('Erro completo:', response.status, result);
+        alert('Erro: ' + JSON.stringify(result.errors || result));
+    }
+});
+</script>
+
+{% endblock %}

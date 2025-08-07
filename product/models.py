@@ -27,11 +27,11 @@ class StockEntries(models.Model):
     quantity = models.IntegerField()
     price = models.FloatField()
     fkSupplier = models.ForeignKey(Supplier, related_name='responsability_supplier', on_delete=models.RESTRICT)
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now_add=True)
 
 class StockOutputs(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     fk_product = models.ForeignKey(Product, related_name='product_outputs', on_delete=models.RESTRICT)
     quantity = models.IntegerField()
     reason = models.TextField()
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now_add=True)
