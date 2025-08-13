@@ -4,7 +4,7 @@ from django.views import View
 from .forms import *
 from .utilits import *
 from company.forms import *
-
+from company.models import *
 # Create your views here.
 
 # Classe para redirecionamento de tipo de usuário
@@ -83,7 +83,12 @@ class Home(View):
     def get(self, request):
         companyForm = RegisterCompanyForm()
 
+        companyUser = CompanyUser.objects.filter(
+            user = request.user
+        )
+
         context = {
-            'form' : companyForm
+            'form' : companyForm,
+            'companysUser': companyUser
         }
         return render(request, 'geral/home.html', context)

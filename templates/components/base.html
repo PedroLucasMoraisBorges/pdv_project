@@ -18,44 +18,65 @@
             box-sizing: border-box;
             font-family: "Poppins", sans-serif;
         }
+
+        a {
+            text-decoration: none;
+        }
     </style>
     {% block head %}
     {% endblock %}
 </head>
 <body>
-    <header>
-        <p><strong>Logo</strong></p>
+    {% include './sidebar.html' %}
 
-        <nav class="headerLinks">
-            <a href="">Início</a>
-            <a href="">Sobre</a>
-            <a href="">FAQ</a>
-        </nav>
+    <div class="main-wrapper">
+        <header class="header">
+            <nav class="header-nav">
+                 <a href="#">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 15h1.5a2.5 2.5 0 0 1 0 5H4"></path><path d="M18 15h1.5a2.5 2.5 0 0 0 0 5H18"></path><line x1="12" y1="9" x2="12" y2="21"></line><line x1="9" y1="9" x2="9" y2="3"></line><line x1="15" y1="9" x2="15" y2="3"></line></svg>
+                     Faturamento
+                 </a>
+                 <a href="#">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                     Pastas Arquivadas
+                 </a>
+                 <div class="profile-section">
+                    <div class="profile-avatar" id="profile-avatar">PL</div>
+                    <div class="profile-popup" id="profile-popup">
+                        <div class="popup-header">
+                            <div class="popup-avatar">PL</div>
+                            <div class="popup-user-info">
+                                <div class="name">Pedro Lucas</div>
+                                <div class="email">
+                                    <abbr title="pedrulucas000@gmail.com">pedrulucas000@gmail...</abbr></div>
+                            </div>
+                        </div>
+                        <nav class="popup-menu">
+                            <ul>
+                                <li>
+                                    <a href="#">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                        Configurações de C...
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                                        Sair
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </nav>
+        </header>
 
-        <div>
-            <p>{{user.name}}</p>
-            <a href="{% url 'logout' %}">Sair</a>
-        </div>
-    </header>
-
-    
-    <main>
-        <aside class="sidebar closed" id="sidebar">
-            <button id="toggleSidebar">
-                <img src="{% static 'icons/openSideBar.svg' %}" alt="Toggle Sidebar" id="toggleIcon">
-            </button>
-            <a href="{% url 'home' %}">
-                <img src="{% static 'icons/home.svg' %}" alt="Início">
-                <span class="link-text">Início</span>
-            </a>
-        </aside>
-
-
-        <section>
+        <main class="main-content">
             {% block body %}
             {% endblock %}
-        </section>
-    </main>
+        </main>
+    </div>
 
     {% block script %}
     {% endblock %}

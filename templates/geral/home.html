@@ -2,7 +2,51 @@
 {% load static %}
 
 {% block body %}
-<form id="companyForm">
+    <section class="hero-section">
+        <h1>Seu Dia a Dia, Trabalhando com Eficiência</h1>
+        <p>Acompanhe suas empresas, priorize tarefas e controle todo o fluxo de trabalho – tudo em um só lugar.</p>
+    </section>
+
+    <section class="folders-section">
+        <div class="folders-header">
+            <h2>Suas empresas</h2>
+            <p>Veja abaixo a lista completa das empresas ativas</p>
+        </div>
+        
+        <div class="folders-controls">
+            <div class="search-bar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" placeholder="Pesquise a lista completa de empresas">
+            </div>
+            <div class="action-buttons">
+                <button class="btn-create">Criar Empresa</button>
+            </div>
+        </div>
+        
+        <table class="folders-table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Data de Cadastro</th>
+                    <th>Colaboradores</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for company in companysUser %}
+                    <tr>
+                        <td>{{ company.company.name }}</td>
+                        <td>{{ company.company.dt_creation }}</td>
+                        <td>{{ company.company.colaborators }}</td>
+                        <td>
+                            <a href="{% url 'dashBoardCompany' id=company.company.id %}" class="btn-open">Abrir</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+<!-- <form method="post" action="{% url 'createCompany' %}" id="companyForm">
     {% csrf_token %}
     <p>Cadastrar Empresa</p>
     {% for field in form %}
@@ -11,53 +55,10 @@
         <br><br>
     {% endfor %}
     <button type="submit">Cadastrar</button>
-</form>
-
-{% for company in companys %}
-{% endfor %}
+</form> -->
 
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'js/masks.js' %}"></script><script>
-document.getElementById('companyForm').addEventListener('submit', async function (e) {
-    e.preventDefault();
-
-    const form = e.target;
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
-
-    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
-    console.log(data)
-
-    const response = await fetch("{% url 'createCompany' %}", {
-        method: 'POST',
-        credentials: 'same-origin', // <--- envia cookie de sessão / CSRF
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': csrftoken,
-            'X-Requested-With': 'XMLHttpRequest' // opcional, ajuda com detecção AJAX
-        },
-        body: JSON.stringify(data),
-    });
-
-    // Debug: inspecionar status e corpo bruto
-    const text = await response.text();
-    let result;
-    try {
-        result = JSON.parse(text);
-    } catch {
-        result = { raw: text };
-    }
-
-    if (response.ok) {
-        alert(result.message || 'Empresa cadastrada!');
-    } else {
-        console.error('Erro completo:', response.status, result);
-        alert('Erro: ' + JSON.stringify(result.errors || result));
-    }
-});
-</script>
-
+    <script src="{% static 'js/masks.js' %}"></script>
 {% endblock %}
