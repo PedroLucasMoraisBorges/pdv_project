@@ -1,8 +1,5 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
 from .forms import RegisterCompanyForm
 from auth_user.models import *
 from .models import *
